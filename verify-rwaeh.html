@@ -239,9 +239,8 @@ RWAEH.COM
 
 <script>
 
-const SHEET_CSV =
-"https://docs.google.com/spreadsheets/d/1XoncKTIGuDLASZ5pH4dcea0OveKThyWuU4V3ShgUCug/export?format=csv";
-
+const API_URL =
+"https://script.google.com/macros/s/AKfycbyKWZfbkGgBFq74y8aZ5MpF5hcoOrjDz7irIwZUHG_U0CHZwfSCWaVDtez3cDU8ieAz/exec";
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
@@ -260,40 +259,21 @@ return;
 
 try{
 
-const response = await fetch(SHEET_CSV);
-const csv = await response.text();
+const response = await fetch(SHEET_CSV);const response =
+await fetch(API_URL + "?id=" + encodeURIComponent(id));
 
-const rows = csv.split("\n");
+const found =
+await response.json();
 
-let found = null;
+const found =
+await response.json();
 
-for(let i=1;i<rows.length;i++){
+if(found.found){
 
-let cols = rows[i]
-.replace(/\r/g,"")
-.replace(/"/g,"")
-.split(",");
+let product = found.product;
+let batch = found.batch;
+let status = found.status;
 
-if(cols.length >= 4){
-
-let code = cols[0].trim();
-
-if(code === id){
-
-found = cols;
-break;
-
-}
-
-}
-
-}
-
-if(found){
-
-let product = found[1].trim();
-let batch = found[2].trim();
-let status = found[3].trim();
 
 document.getElementById("productName").innerText =
 product;
