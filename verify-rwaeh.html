@@ -177,7 +177,14 @@ Status
 
 <tr>
 <td class="label">
-تاريخ التحقق<br>
+<tr>
+<td class="label">
+عدد مرات التحقق<br>
+Verification Count
+</td>
+<td id="scanCount">0</td>
+</tr>
+  تاريخ التحقق<br>
 Verification Date
 </td>
 <td id="verifyDate">-</td>
@@ -294,6 +301,14 @@ if(found){
 let product = found[1].trim();
 let batch = found[2].trim();
 let status = found[3].trim();
+  if(found.warning){
+
+alert(
+"⚠️ تحذير\n\nتم التحقق من هذا المنتج أكثر من 10 مرات.\n\nPlease verify the source of the product."
+);
+
+}
+
 
 document.getElementById("productName").innerText =
 product;
